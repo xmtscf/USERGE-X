@@ -38,7 +38,7 @@ async def down_load_media(message: Message):
     try:
         dl_loc, d_in = await handle_download(message, resource)
     except ProcessCanceled:
-        await message.edit("`Process Canceled!`", del_in=5)
+        await message.edit("`Processo Cancelado!`", del_in=5)
     except Exception as e_e:  # pylint: disable=broad-except
         await message.err(e_e)
     else:

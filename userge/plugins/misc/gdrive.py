@@ -245,7 +245,7 @@ class _GDrive:
             )
             if mime_type == G_DRIVE_DIR_MIME_TYPE:
                 link += "/"
-            out += f"\n👥 __[Shareable Link]({link})__"
+            out += f"\n👥 **Link Direto: **\n`{link}`"
         return out
 
     def _upload_file(self, file_path: str, parent_id: str) -> str:
@@ -257,7 +257,7 @@ class _GDrive:
         body = {
             "name": file_name,
             "mimeType": mime_type,
-            "description": "Uploaded using Userge",
+            "description": "Uploaded using Userge-X",
         }
         if parent_id:
             body["parents"] = [parent_id]
@@ -384,7 +384,7 @@ class _GDrive:
             _LOG.exception(h_e)
             self._output = h_e
         except ProcessCanceled:
-            self._output = "`Process Canceled!`"
+            self._output = "`Processo Cancelado!`"
         finally:
             self._finish()
 
@@ -513,7 +513,7 @@ class _GDrive:
             _LOG.exception(h_e)
             self._output = h_e
         except ProcessCanceled:
-            self._output = "`Process Canceled!`"
+            self._output = "`Processo Cancelado!`"
         finally:
             self._finish()
 
@@ -595,7 +595,7 @@ class _GDrive:
             _LOG.exception(h_e)
             self._output = h_e
         except ProcessCanceled:
-            self._output = "`Process Canceled!`"
+            self._output = "`Processo Cancelado!`"
         finally:
             self._finish()
 
@@ -835,7 +835,9 @@ class Worker(_GDrive):
             )  # pylint: disable=protected-access
             return
         await self._message.edit(
-            f"**Shareable Links**\n\n{out}", disable_web_page_preview=True, log=__name__
+            f"**Link Compartilháveis**\n\n{out}",
+            disable_web_page_preview=True,
+            log=__name__,
         )
 
     @creds_dec
@@ -919,7 +921,7 @@ class Worker(_GDrive):
             try:
                 dl_loc, _ = await tg_download(self._message, replied)
             except ProcessCanceled:
-                await self._message.edit("`Process Canceled!`", del_in=5)
+                await self._message.edit("`Processo Cancelado!`", del_in=5)
                 return
             except Exception as e_e:
                 await self._message.err(e_e)
@@ -928,7 +930,7 @@ class Worker(_GDrive):
             try:
                 dl_loc, _ = await url_download(self._message, self._message.input_str)
             except ProcessCanceled:
-                await self._message.edit("`Process Canceled!`", del_in=5)
+                await self._message.edit("`Processo Cancelado!`", del_in=5)
                 return
             except Exception as e_e:
                 await self._message.err(e_e)
@@ -944,7 +946,7 @@ class Worker(_GDrive):
             )
             os.rename(file_path.strip(), new_path)
             file_path = new_path
-        await self._message.try_to_edit("`Loading GDrive Upload...`")
+        await self._message.try_to_edit("`Carregando GDrive Upload...`")
         pool.submit_thread(self._upload, file_path)
         start_t = datetime.now()
         count = 0
@@ -966,7 +968,7 @@ class Worker(_GDrive):
         if isinstance(self._output, HttpError):
             out = f"**ERROR** : `{self._output._get_reason()}`"  # pylint: disable=protected-access
         elif self._output is not None and not self._is_canceled:
-            out = f"**Uploaded Successfully** __in {m_s} seconds__\n\n{self._output}"
+            out = f"**Enviado com Sucesso** __em {m_s} segundos__\n\n{self._output}"
         elif self._output is not None and self._is_canceled:
             out = self._output
         else:
@@ -1259,7 +1261,7 @@ async def gmake_(message: Message):
 @userge.on_cmd(
     "gshare",
     about={
-        "header": "Get Shareable Links for GDrive files",
+        "header": "Obtenha links compartilháveis para arquivos GDrive",
         "usage": "{tr}gshare [file_id | file/folder link]",
     },
 )

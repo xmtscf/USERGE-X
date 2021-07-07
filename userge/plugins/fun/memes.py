@@ -215,7 +215,7 @@ async def metoo_(message: Message):
     await check_and_send(message, choice(METOOSTR), parse_mode="html")
 
 
-@userge.on_cmd("10iq$", about={"header": "You retard !!"}, name="10iq")
+@userge.on_cmd("10iq$", about={"header": "🤖"}, name="10iq")
 async def iqless(message: Message):
     """iqless"""
     await check_and_send(message, "♿")

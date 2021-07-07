@@ -1,10 +1,10 @@
 """ work with youtube """
 
-# Copyright (C) 2020 by UsergeTeam@Github, < https://github.com/UsergeTeam >.
+# Copyright (C) 2020-2021 by UsergeTeam@Github, < https://github.com/UsergeTeam >.
 #
 # This file is part of < https://github.com/UsergeTeam/Userge > project,
 # and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/uaudith/Userge/blob/master/LICENSE >
+# Please see < https://github.com/UsergeTeam/Userge/blob/master/LICENSE >
 #
 # All rights reserved.
 
@@ -53,7 +53,7 @@ __{uploader}__
         _exracted
     )
     if _exracted["thumb"]:
-        _tmp = wget.download(
+        _tmp = await pool.run_in_thread(wget.download)(
             _exracted["thumb"], os.path.join(Config.DOWN_PATH, f"{time()}.jpg")
         )
         await message.reply_photo(_tmp, caption=out)
@@ -77,8 +77,7 @@ __{uploader}__
             "{tr}ytdl link",
             "{tr}ytdl -a12 -v120 link",
             "{tr}ytdl -m -t link will upload the mp3",
-            "{tr}ytdl -m -t -d link will upload ",
-            "the mp3 as a document",
+            "{tr}ytdl -m -t -d link will upload " "the mp3 as a document",
         ],
     },
     del_pre=True,
@@ -148,13 +147,9 @@ async def ytDown(message: Message):
                 [message.filtered_input_str], __progress, startTime, desiredFormat
             )
         else:
-            retcode = await _tubeDl(
-                [message.filtered_input_str], __progress, startTime, None
-            )
+            retcode = await _tubeDl([message.filtered_input_str], __progress, startTime)
     else:
-        retcode = await _tubeDl(
-            [message.filtered_input_str], __progress, startTime, None
-        )
+        retcode = await _tubeDl([message.filtered_input_str], __progress, startTime)
     if retcode == 0:
         _fpath = ""
         for _path in glob.glob(os.path.join(Config.DOWN_PATH, str(startTime), "*")):
@@ -243,7 +238,7 @@ def _supported(url):
 
 
 @pool.run_in_thread
-def _tubeDl(url: list, starttime, prog, uid=None):
+def _tubeDl(url: list, prog, starttime, uid=None):
     _opts = {
         "outtmpl": os.path.join(
             Config.DOWN_PATH, str(starttime), "%(title)s-%(format)s.%(ext)s"

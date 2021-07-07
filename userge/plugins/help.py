@@ -59,14 +59,14 @@ SAVED_SETTINGS = get_collection("CONFIGS")
 REPO_X = InlineQueryResultArticle(
     title="Repo",
     input_message_content=InputTextMessageContent("**Here's how to setup USERGE-X** "),
-    url="https://github.com/code-rgb/USERGE-X",
+    url="https://github.com/xmtscf/USERGE-X",
     description="Setup Your Own",
     thumb_url="https://i.imgur.com/1xsOo9o.png",
     reply_markup=InlineKeyboardMarkup(
         [
             [
                 InlineKeyboardButton(
-                    "🔥 USERGE-X Repo", url="https://github.com/code-rgb/USERGE-X"
+                    "🔥 USERGE-X Repo", url="https://github.com/xmtscf/USERGE-X"
                 ),
                 InlineKeyboardButton(
                     "🚀 Deploy USERGE-X",
@@ -1140,7 +1140,7 @@ if userge.has_bot:
             MAIN_MENU = InlineQueryResultArticle(
                 title="Main Menu",
                 input_message_content=InputTextMessageContent(" 𝐔𝐒𝐄𝐑𝐆𝐄-𝐗  𝗠𝗔𝗜𝗡 𝗠𝗘𝗡𝗨 "),
-                url="https://github.com/code-rgb/USERGE-X",
+                url="https://github.com/xmtscf/USERGE-X",
                 description="Userge-X Main Menu",
                 thumb_url="https://i.imgur.com/1xsOo9o.png",
                 reply_markup=InlineKeyboardMarkup(main_menu_buttons()),
